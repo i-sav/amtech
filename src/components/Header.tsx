@@ -48,7 +48,7 @@ const Header: React.FC = () => {
           {currentUserDetails?.role === "admin" ?
             <IonIcon className="ion-padding" slot="end" size="large" color="primary" icon={listSharp} onClick={(e) => {
               e.preventDefault();
-              history.push("/transactions");
+              history.push("/applications");
             }}></IonIcon>
             :
             <IonIcon className="ion-padding" slot="end" size="large" color="primary" icon={listOutline} onClick={(e) => {
