@@ -105,6 +105,7 @@ const LogIn: React.FC = () => {
         setMessage("Welcome...");
         setIserror(true);
         //history.push("/home");
+        //history.push("/home");
         //window.history.replaceState({}, "Home", "/home");
         window.history.replaceState({}, "Home", "/");
         document.location.reload();
