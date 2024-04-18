@@ -16,16 +16,7 @@ import {
     IonButtons,
     IonBackButton,
     IonToolbar,
-    IonList,
-    IonListHeader,
-    IonLabel,
-    IonItem,
-    IonButton,
-    IonToast,
     IonTitle,
-    IonInput,
-    IonSelect,
-    IonSelectOption,
 } from "@ionic/react";
 import { RouteComponentProps } from "react-router";
 
@@ -33,7 +24,7 @@ import "@ionic/react/css/ionic-swiper.css";
 import ButtonProgress from "../components/ButtonProgress";
 
 
-const TransactionRecords: React.FC = () => {
+const MyHistory: React.FC = () => {
     const userId = useContext(AuthContext);
     const history = useHistory();
     //
@@ -119,7 +110,7 @@ const TransactionRecords: React.FC = () => {
                     <IonButtons slot="start">
                         <IonBackButton />
                     </IonButtons>
-                    <IonTitle><b>Payment Records</b></IonTitle>
+                    <IonTitle><b>My License History</b></IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -130,4 +121,4 @@ const TransactionRecords: React.FC = () => {
     );
 };
 
-export default TransactionRecords;
+export default MyHistory;

@@ -303,7 +303,11 @@ const HomePage: React.FC = () => {
                     <p>10)A colour photograph of the retail point clearly showing the cylinder holding cage and the neighbouring premises.</p>
 
                     <IonButton expand="full"
-                      shape="round">Apply </IonButton>
+                      shape="round"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        history.push("/license-application/" + "Retail of LPG in Cylinders", { state: { category: "rlpgc", amount: 0 } });
+                      }}>Apply </IonButton>
                   </div>
                 </IonAccordion>
                 <IonAccordion>
@@ -337,7 +341,11 @@ const HomePage: React.FC = () => {
                     <p>16)A valid Environmental Impact Assessment licence from NEMA for the facility;</p>
 
                     <IonButton expand="full"
-                      shape="round">Apply </IonButton>
+                      shape="round"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        history.push("/license-application/" + "Retail of Petroleum Products (except LPG)", { state: { category: "rpp", amount: 0 } });
+                      }}>Apply </IonButton>
                   </div>
                 </IonAccordion>
                 <IonAccordion>
@@ -361,7 +369,10 @@ const HomePage: React.FC = () => {
                     <p>6) Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)</p>
 
                     <IonButton expand="full"
-                      shape="round">Apply </IonButton>
+                      shape="round" onClick={(e) => {
+                        e.preventDefault();
+                        history.push("/license-application/" + "Export and Wholesale of Petroleum Products(Except LPG)", { state: { category: "ewpp", amount: 0 } });
+                      }}>Apply </IonButton>
                   </div>
                 </IonAccordion>
                 <IonAccordion>
@@ -385,7 +396,10 @@ const HomePage: React.FC = () => {
                     <p>6) Proof of training on defensive driving from a National Industrial Training Authority approved driving school.      </p>
 
                     <IonButton expand="full"
-                      shape="round">Apply </IonButton>
+                      shape="round" onClick={(e) => {
+                        e.preventDefault();
+                        history.push("/license-application/" + "Driver Certification / Driver License", { state: { category: "dl", amount: 0 } });
+                      }}>Apply </IonButton>
                   </div>
                 </IonAccordion>
               </IonAccordionGroup>

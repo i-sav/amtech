@@ -13,7 +13,7 @@ import { homeSharp, searchSharp, settingsSharp } from "ionicons/icons";
 import HomePage from "../pages/Home";
 import AllClients from "../pages/All";
 import AddUser from "../pages/AddUsers";
-import TransactionRecords from "../pages/Transactions";
+import ApplicationRecords from "../pages/Applications";
 import UploadDocument from "../pages/DocumentUpload";
 import Profile from "../pages/Profile";
 import LogIn from "../pages/Login";
@@ -24,6 +24,7 @@ import ClientProfile from "../pages/ClientProfiles";
 import CurrentUserDetailsStore from "../store/CurrentUserDataStore";
 import AllUserDocuments from "../pages/UserDocs";
 import ApplyLicense from "../pages/LicenseApplication";
+import MyHistory from "../pages/ApplicationHistory"
 
 
 
@@ -61,8 +62,11 @@ const Home: React.FC = (RouteComponentProps) => {
             path="/license-application/:id"
             render={(match) => <ApplyLicense {...match} />}
           ></Route>
-          <Route exact path="/transactions">
-            <TransactionRecords />
+          <Route exact path="/applications">
+            <ApplicationRecords />
+          </Route>
+          <Route exact path="/application-history">
+            <MyHistory />
           </Route>
           <Route exact path="/profile">
             <Profile />

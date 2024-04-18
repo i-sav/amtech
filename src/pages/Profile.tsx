@@ -34,8 +34,7 @@ const Profile: React.FC = () => {
   //log out current user
   const LogOut = () => {
     localStorage.removeItem("AM-Tkn");
-    //window.history.replaceState({}, "Log In", "/login");
-    window.history.replaceState({}, "Log In", "/");
+    window.history.replaceState({}, "Log In", "/login");
     setMessage("Logging you out...");
     setIserror(true);
     document.location.reload();

@@ -233,3 +233,25 @@ http://ionicframework.com/docs/theming/ */
     --ion-card-background: #1e1e1e;
   }
 }
+
+@media only screen and (min-width: 1025px) {
+
+  /* Styles for larger screens (desktops and laptops) */
+  body {
+    margin-left: 20%;
+    max-width: 60%;
+
+    background-image: url('/public/assets/images/amtechbackground.gif');
+    /* Replace 'your-image.jpg' with the path to your image */
+    background-size: cover;
+    /* Adjust as needed */
+    background-position: center;
+    /* Adjust as needed */
+    background-repeat: no-repeat;
+    /* Adjust as needed */
+    background-color: #ffffff;
+    /* Adjust the last value (0.5) for opacity */
+    /* opacity */
+    /* opacity: 0.9; */
+  }
+}
