@@ -176,7 +176,8 @@ const LogIn: React.FC = () => {
         //Reload to login
         function proceedToLogIn() {
           //history.push("/login");
-          window.history.replaceState({}, "Log In", "/login");
+          //window.history.replaceState({}, "Log In", "/login");
+          window.history.replaceState({}, "Log In", "/");
           document.location.reload();
         }
         setTimeout(proceedToLogIn, 4000);
