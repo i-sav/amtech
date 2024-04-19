@@ -22,6 +22,8 @@ import {
     IonTitle,
     IonInput,
     IonIcon,
+    IonSelect,
+    IonSelectOption,
 } from "@ionic/react";
 import { RouteComponentProps } from "react-router";
 
@@ -39,7 +41,8 @@ export interface PageProps
 const UploadDocument: React.FC<PageProps> = ({ match }) => {
     const history = useHistory();
     //
-    const [title, setTitle] = useState<string>("");
+    // const [title, setTitle] = useState<string>("");
+    const [category, setCategory] = useState<string>("");
     const [filePath, setFilePath] = useState<string>("");
     const [blobState, setBlobState] = useState<any>();
     //
@@ -106,8 +109,8 @@ const UploadDocument: React.FC<PageProps> = ({ match }) => {
         }
 
         //document title
-        if (title == "") {
-            setMessage("Please provide the document title");
+        if (category == "") {
+            setMessage("Please select the document Category");
             setIserror(true);
             return;
         }
@@ -132,9 +135,10 @@ const UploadDocument: React.FC<PageProps> = ({ match }) => {
             console.log(data);
             //process data
             const DocumentData = {
-                title: title,
+                // title: title,
                 documentUrl: data?.path,
                 belongsTo: userId,
+                category: category,
             };
 
             const api = axios.create({
@@ -188,13 +192,19 @@ const UploadDocument: React.FC<PageProps> = ({ match }) => {
                         <input id="file-upload" type="file" onChange={setFile} />
                     </div>
                     <IonItem lines="none">
-                        <IonLabel position="floating"><b>Document Title</b></IonLabel>
-                        <IonInput
+                        <IonLabel position="floating"><b>Select Category</b></IonLabel>
+                        <IonSelect
                             className="ion-padding"
-                            placeholder="Document Title"
-                            value={title}
-                            onIonChange={(e) => setTitle(e.detail.value!)}
-                        ></IonInput>
+                            value={category}
+                            onIonChange={(e) => setCategory(e.detail.value!)}
+                        >
+                            <IonSelectOption value="transport">Transport Of LPG</IonSelectOption>
+                            <IonSelectOption value="lpg-retail-expt">Retail Expt LPG</IonSelectOption>
+                            <IonSelectOption value="lpg-retail">Retail of LPG</IonSelectOption>
+                            <IonSelectOption value="export-wholesale">Export & Wholesale</IonSelectOption>
+                            <IonSelectOption value="drivers">Driver License</IonSelectOption>
+                            <IonSelectOption value="Other">Normal Documents(Non-License)</IonSelectOption>
+                        </IonSelect>
                     </IonItem>
 
 

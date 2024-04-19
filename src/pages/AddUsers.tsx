@@ -158,17 +158,14 @@ const AddUser: React.FC = () => {
                     </IonItem>
 
                     <IonItem lines="none">
-                        <IonLabel position="floating"><b>Select Category</b></IonLabel>
+                        <IonLabel position="floating"><b>Select User Category</b></IonLabel>
                         <IonSelect
                             className="ion-padding"
                             value={category}
                             onIonChange={(e) => setCategory(e.detail.value!)}
                         >
-                            <IonSelectOption value="transport">Transport</IonSelectOption>
-                            <IonSelectOption value="lpg-retail">Retail of LPG</IonSelectOption>
-                            <IonSelectOption value="lpg-retail-expt">Retail Expt LPG</IonSelectOption>
-                            <IonSelectOption value="export-wholesale">Export & Wholesale</IonSelectOption>
-                            <IonSelectOption value="drivers">Drivers</IonSelectOption>
+                            <IonSelectOption value="admin">Admin</IonSelectOption>
+                            <IonSelectOption value="user">Normal User</IonSelectOption>
                         </IonSelect>
                     </IonItem>
                     <IonItem lines="none">

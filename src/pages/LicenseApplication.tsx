@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../components/AuthContext";
 import axios from "axios";
@@ -20,6 +20,7 @@ import {
     IonToast,
     IonTitle,
     IonIcon,
+    IonItem,
     IonCard,
     IonText,
 } from "@ionic/react";
@@ -27,9 +28,10 @@ import { RouteComponentProps, useLocation } from "react-router";
 
 import "@ionic/react/css/ionic-swiper.css";
 import ButtonProgress from "../components/ButtonProgress";
-import { arrowForwardOutline, documentAttachOutline } from "ionicons/icons";
+import { arrowForwardOutline, checkmarkDoneCircle, documentAttachOutline } from "ionicons/icons";
 import { getDocuments } from "../store/DocStore";
 import MyApplicationsStore, { getApplications } from "../store/ApplicationsStore";
+import { type } from "os";
 
 export interface PageProps
     extends RouteComponentProps<{
@@ -42,7 +44,10 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
     const history = useHistory();
     //
     const [filePath, setFilePath] = useState<string>("");
+    const [activeFile, setActiveFile] = useState<string>("");
     const [blobState, setBlobState] = useState<any>();
+    const [types, setTypes] = useState<any>([]);
+    const [requiredTypes, setRequiredTypes] = useState<any>([]);
     //
     const [iserror, setIserror] = useState<boolean>(false);
     const [progress, setProgress] = useState<boolean>(false);
@@ -54,16 +59,40 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
     //passed data
     const location = useLocation() as any;
     const applicationData = location.state?.state;
-    //list uploaded files
-    const uploadedAlready = MyApplicationsStore.useState<any>(s => s.applications);
-    //console.log(uploadedAlready);
-    //docs for this application
-    const thisApplicationsDocs = uploadedAlready.filter((document: any) => document.category === applicationData?.category);
-    //console.log(thisApplicationsDocs);
+
+    //console.log(applicationData?.category);
+    const applications = MyApplicationsStore.useState<any>(s => s.applications);
+    //console.log(applications);
+    //this application
+    const thisApplication = applications.filter((currentApplication: any) => currentApplication?.licenseCategory === applicationData?.category);
+    console.log(thisApplication);
+    const documentsUploaded = thisApplication[0]?.documents;
+
+    //const types: Array<string> = [];
+    //loop through the required
+    applicationData?.requirements?.forEach((document: any) => {
+        const documentType = document.type;
+        //console.log(documentType);
+        requiredTypes.push(documentType);
+    });
+    //end of required
+
+
+    //loop through already upload files and add to types
+    documentsUploaded?.forEach((document: any) => {
+        const documentType = document.documentType;
+        // console.log(documentType);
+        types.push(documentType);
+    });
+    //console.log(documentsUploaded);
+    //filter 
+    console.log(types);
+
 
     //const open dialog
-    const openFileDialog = () => {
+    const openFileDialog = (active: any) => {
         (document as any).getElementById("file-upload").click();
+        setActiveFile(`${active}`);
     }
     //set Image
     const setFile = (_event: any) => {
@@ -72,24 +101,20 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
         //const selectedFilePath = file?.path;
         const selectedFilePath = file?.name;
         setFilePath(selectedFilePath as string);
-        //Process blob
-        // if (file.blob) {
-        //     console.log(file.blob);
-        //     const rawFile = new Blob([file.blob as BlobPart, file.name], {
-        //         type: file.mimeType,
-        //     });
-
-        //};
         setBlobState(file);
     }
 
     //upload document logic
     const handleDocumentUpload = async (filePath: any, blobState: any) => {
+
+        //handle upload
         if (filePath == "") {
             setMessage("Please select the document to upload");
             setIserror(true);
             return;
         }
+        //upload timestamp
+        const currentTime = new Date().getTime();
         //path
         const filename = filePath.substr(filePath.lastIndexOf("/") + 1);
 
@@ -97,7 +122,7 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
         //console.log(blobState);
         const { data, error } = await supabase.storage
             .from("biva-storage")
-            .upload(`docs/${filename}`, blobState, {
+            .upload(`docs/${currentTime + filename}`, blobState, {
                 cacheControl: "3600",
                 upsert: false,
             });
@@ -109,12 +134,15 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
             setProgress(false);
         } else {
             console.log(data);
+            //push file to uploaded types
+            setTypes([...types, activeFile]);
             //process data
             const DocumentData = {
                 documentUrl: data?.path,
                 applicationBy: userId,
                 category: applicationData?.category,
                 amountPaid: applicationData?.amount,
+                documentType: activeFile,
 
             };
 
@@ -124,18 +152,12 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
             api
                 .post("/apply-license", DocumentData)
                 .then((res) => {
+                    //getApplications(userId);
                     setMessage("Document has been uploaded. Upload other required documents and finish your application");
                     setIserror(true);
                     setProgress(false);
                     setFilePath("");
-                    getApplications(userId);
-                    //go back to previous route
-                    // function goBack() {
-                    //     getDocuments(userId);
-                    //     history.goBack();
-                    // }
-                    // setTimeout(goBack, 5000);
-                    // --------------
+                    setActiveFile("");
                 })
                 .catch((error) => {
                     setMessage(error);
@@ -145,7 +167,38 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
     };
     //submit and finish application
     const SubmitApplication = async () => {
-        console.log(" --- Submitting Application˝ ----")
+        console.log(" --- Submitting Application˝ ----");
+        //check if all documents have been uploaded
+        let typeChecker = (arr: any, target: any) => target.every((v: any) => arr.includes(v));
+        console.log(typeChecker(types, requiredTypes));
+        if (typeChecker(types, requiredTypes) === false) {
+            console.log(" --- All required Documents have not been uploaded ----")
+        } else {
+            console.log(" ---- Submitting Application ---- ");
+            const applicationData = {
+                applicationId: thisApplication[0]._id,
+            }
+            console.log(applicationData);
+            setSubmitting(true);
+            const api = axios.create({
+                baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/users`,
+            });
+            api
+                .post("/submit-license-application", applicationData)
+                .then((res) => {
+                    //getApplications(userId);
+                    setMessage("Application submitted successfully!");
+                    setIserror(true);
+                    setSubmitting(false);
+                    setFilePath("");
+                    setActiveFile("");
+                })
+                .catch((error) => {
+                    setMessage(error);
+                    setIserror(true);
+                });
+        }
+
     }
 
     return (
@@ -163,49 +216,49 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
                     <IonListHeader>
                         <IonLabel color="primary">{licenseId} </IonLabel>
                     </IonListHeader>
+                    {filePath ? <p className="ion-text-center">{filePath}</p> : ""}
+                    {progress ? <ButtonProgress /> : ""}
+                    <h6 className="ion-padding"><b>Upload each of the following:</b></h6>
+                    {applicationData?.requirements?.map((requirement: any, index: any) => (
 
-                    <div className="ion-text-center ion-padding" onClick={() => openFileDialog()}>
-                        <IonIcon id="documentSelector" slot="start" size="large" color="primary" icon={documentAttachOutline}></IonIcon>
-                        <IonLabel className="ion-padding ion-text-wrap">
-                            <h2><b>Upload Required Documents One by one</b></h2>
-                            <p>Tap to select documents from device and upload</p>
-                            {filePath ? <p>{filePath}</p> : ""}
-                            {progress ? <ButtonProgress /> : ""}
-                        </IonLabel>
-                    </div>
-                    <IonButton
-                        id="signUpButton"
-                        expand="full"
-                        size="small"
-                        shape="round"
-                        onClick={() => handleDocumentUpload(filePath, blobState)}
-                    >
-                        Upload Document
-                    </IonButton>
+                        types?.includes(`${requirement?.type}`) ?
+                            <IonItem>
+                                <IonLabel className="ion-text-wrap">
+                                    <p>{requirement?.description}</p>
+                                    <br />
+                                </IonLabel>
+                                <IonIcon id="documentSelector" slot="end" size="large" color="primary" icon={checkmarkDoneCircle}></IonIcon>
+
+                            </IonItem>
+                            :
+                            <IonItem>
+                                <IonLabel className="ion-text-wrap">
+                                    <p onClick={() => openFileDialog(`${requirement?.type}`)}>{requirement?.description}</p>
+                                    <br />
+                                    {activeFile === `${requirement?.type}` ? <IonButton
+                                        id="signUpButton"
+                                        expand="block"
+                                        size="small"
+                                        fill="outline"
+                                        onClick={() => handleDocumentUpload(filePath, blobState)}
+                                    >
+                                        Upload
+                                    </IonButton> : ""}
+                                </IonLabel>
+                                <IonIcon id="documentSelector" slot="end" size="large" color="primary" icon={documentAttachOutline} onClick={() => openFileDialog(`${requirement?.type}`)}></IonIcon>
+
+                            </IonItem>
+                    ))}
+
+
+
                     <div style={{ display: "none" }}>
                         <input id="file-upload" type="file" onChange={setFile} />
                     </div>
-                    <IonListHeader>
-                        <IonLabel color="primary"><b>Documents you've uploaded</b></IonLabel>
-                    </IonListHeader>
-                    {
-                        thisApplicationsDocs !== undefined ? (
-                            thisApplicationsDocs?.length > 0 ? (
-                                thisApplicationsDocs[2]?.documents?.map((document: string, index: any) => (
-                                    <IonCard className="ion-padding" key={index}><IonText>{document?.[0]}</IonText></IonCard>
-                                ))
-                            ) : (
-                                <IonCard className="ion-padding">
-                                    <IonText><b>Already uploaded documents for this application will appear here</b></IonText>
-                                </IonCard>
-                            )
-                        ) : (
-                            ""
-                        )}
-
+                    <br />
 
                     {submitting ? <ButtonProgress /> : ""}
-                    <IonButton
+                    {thisApplication?.status === "applied" ? <IonButton
                         id="signUpButton"
                         color="dark"
                         expand="full"
@@ -214,7 +267,7 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
                     >
                         Finish & Submit Application
                         <IonIcon icon={arrowForwardOutline}></IonIcon>
-                    </IonButton>
+                    </IonButton> : <IonCard className="ion-padding"><IonText color="primary"><IonIcon size="large" icon={checkmarkDoneCircle}></IonIcon>Your application is being processed</IonText></IonCard>}
                 </IonList>
                 <IonToast
                     color="primary"
@@ -224,7 +277,7 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
                     duration={5000}
                 />
             </IonContent>
-        </IonPage>
+        </IonPage >
     );
 };
 

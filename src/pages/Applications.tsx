@@ -17,91 +17,28 @@ import {
     IonBackButton,
     IonToolbar,
     IonTitle,
+    IonCard,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonText,
 } from "@ionic/react";
 import { RouteComponentProps } from "react-router";
 
 import "@ionic/react/css/ionic-swiper.css";
 import ButtonProgress from "../components/ButtonProgress";
+import CurrentApplicationsStore, { AllApplications } from "../store/CurrentApplications";
+import { download, downloadOutline, personCircleSharp } from "ionicons/icons";
 
 
 const ApplicationRecords: React.FC = () => {
     const userId = useContext(AuthContext);
     const history = useHistory();
     //
-    const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [tel, setTel] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [category, setCategory] = useState<string>("");
-    //
-    const [iserror, setIserror] = useState<boolean>(false);
-    const [progress, setProgress] = useState<boolean>(false);
-    const [message, setMessage] = useState<string>("");
-
-    //create user logic
-    const CreateUser = async () => {
-
-        //name
-        if (name == "") {
-            setMessage("Please provide full Name");
-            setIserror(true);
-            return;
-        }
-        //name
-        if (email == "") {
-            setMessage("Please provide a valid email");
-            setIserror(true);
-            return;
-        }
-        //name
-        if (tel == "") {
-            setMessage("Please provide a valid Tel No");
-            setIserror(true);
-            return;
-        }
-        //name
-        if (category == "") {
-            setMessage("Please select the user's category");
-            setIserror(true);
-            return;
-        }
-        if (password == "") {
-            setMessage("Please provide the user's password");
-            setIserror(true);
-            return;
-        }
-
-        setProgress(true);
-
-        //process data
-        const UsrData = {
-            name: name,
-            email: email,
-            tel: tel,
-            password: password,
-            category: category,
-        };
-
-        const api = axios.create({
-            baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/users`,
-        });
-        api
-            .post("/create-user", UsrData)
-            .then((res) => {
-                setMessage("Use has been created successfully. Their logIn credentials have been shared via their email!");
-                setIserror(true);
-                //go back to previous route
-                function goBack() {
-                    history.goBack();
-                }
-                setTimeout(goBack, 5000);
-                // --------------
-            })
-            .catch((error) => {
-                setMessage(error);
-                setIserror(true);
-            });
-    };
+    const currentApplications = CurrentApplicationsStore.useState<any>(s => s.currentApplications);
+    console.log(currentApplications);
 
     return (
         <IonPage>
@@ -115,7 +52,33 @@ const ApplicationRecords: React.FC = () => {
             </IonHeader>
             <IonContent fullscreen>
 
-
+                {
+                    currentApplications !== undefined ? (
+                        currentApplications.length > 0 ? (
+                            currentApplications.slice(0, 60).map((application: any, index: any) => (
+                                <>
+                                    <IonCard className="ion-padding" key={index}>
+                                        <IonIcon size="large" color="primary" icon={personCircleSharp}></IonIcon>
+                                        <IonCardSubtitle>Status:{application?.status}</IonCardSubtitle>
+                                        <IonCardTitle>Category: {application?.licenseCategory}</IonCardTitle>
+                                        <IonRow>
+                                            {application?.documents?.map((doc: any, index: any) => (
+                                                <IonCol size="6" onClick={() => window.open("https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + doc?.documentUrl)}>
+                                                    <p>{doc?.documentType} <IonIcon color="primary" icon={downloadOutline}></IonIcon></p>
+                                                </IonCol>
+                                            ))}
+                                        </IonRow>
+                                    </IonCard>
+                                </>
+                            ))
+                        ) : (
+                            <IonCard className="ion-padding">
+                                <IonText><b>You have no applications at the moment, check again later!</b></IonText>
+                            </IonCard>
+                        )
+                    ) : (
+                        ""
+                    )}
             </IonContent>
         </IonPage>
     );
