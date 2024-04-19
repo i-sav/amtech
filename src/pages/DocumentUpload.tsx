@@ -114,6 +114,8 @@ const UploadDocument: React.FC<PageProps> = ({ match }) => {
             setIserror(true);
             return;
         }
+        //upload timestamp
+        const currentTime = new Date().getTime();
         //path
         const filename = filePath.substr(filePath.lastIndexOf("/") + 1);
 
@@ -121,7 +123,7 @@ const UploadDocument: React.FC<PageProps> = ({ match }) => {
         //console.log(blobState);
         const { data, error } = await supabase.storage
             .from("biva-storage")
-            .upload(`docs/${filename}`, blobState, {
+            .upload(`docs/${currentTime + filename}`, blobState, {
                 cacheControl: "3600",
                 upsert: false,
             });
