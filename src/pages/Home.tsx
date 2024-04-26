@@ -599,7 +599,7 @@ const HomePage: React.FC = () => {
                     <IonButton expand="full"
                       shape="round" onClick={(e) => {
                         e.preventDefault();
-                        history.push("/license-application/" + "Driver Certification / Driver License", {
+                        history.push("/license-application/" + "Driver Certification - Driver License", {
                           state: {
                             category: "drivers", amount: 0, requirements: [
                               {

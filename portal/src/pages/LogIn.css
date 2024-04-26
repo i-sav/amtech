@@ -1,0 +1,31 @@
+#login {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-left: 30%;
+  max-width: 40%;
+  justify-content: center;
+}
+
+#loginPage {
+  margin-top: 35%;
+}
+
+#register {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+#logo {
+  margin-left: 42%;
+}
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
+#eye {
+  margin: auto;
+}

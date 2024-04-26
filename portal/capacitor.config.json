@@ -1,0 +1,6 @@
+{
+	"appId": "app.amtech.com",
+	"appName": "Amtech",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
