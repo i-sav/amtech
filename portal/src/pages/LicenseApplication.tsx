@@ -21,8 +21,6 @@ import {
     IonTitle,
     IonIcon,
     IonItem,
-    IonCard,
-    IonText,
 } from "@ionic/react";
 import { RouteComponentProps, useLocation } from "react-router";
 
@@ -60,15 +58,11 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
     const location = useLocation() as any;
     const applicationData = location.state?.state;
 
-    //console.log(applicationData?.category);
+    //application processing ====
     const applications = MyApplicationsStore.useState<any>(s => s.applications);
-    //console.log(applications);
-    //this application
     const thisApplication = applications.filter((currentApplication: any) => currentApplication?.licenseCategory === applicationData?.category);
     console.log(thisApplication);
     const documentsUploaded = thisApplication[0]?.documents;
-
-    //const types: Array<string> = [];
     //loop through the required
     applicationData?.requirements?.forEach((document: any) => {
         const documentType = document.type;
@@ -76,8 +70,6 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
         requiredTypes.push(documentType);
     });
     //end of required
-
-
     //loop through already upload files and add to types
     documentsUploaded?.forEach((document: any) => {
         const documentType = document.documentType;
@@ -85,9 +77,6 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
         types.push(documentType);
 
     });
-    //console.log(documentsUploaded);
-    //filter 
-    console.log(types);
 
 
     //const open dialog
@@ -203,6 +192,8 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
         }
 
     }
+
+    //end of application =====
 
     return (
         <IonPage>
