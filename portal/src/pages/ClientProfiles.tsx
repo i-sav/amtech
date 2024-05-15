@@ -174,7 +174,7 @@ const ClientProfile: React.FC<PageProps> = ({ match }) => {
             };
 
             const api = axios.create({
-                baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/users`,
+                baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/users`,
             });
             api
                 .post("/create-document", DocumentData)
@@ -248,7 +248,7 @@ const ClientProfile: React.FC<PageProps> = ({ match }) => {
                                                 onIonChange={(e) => setCategory(e.detail.value!)}
                                             >
                                                 <IonSelectOption value="transport">Transport Of LPG</IonSelectOption>
-                                                <IonSelectOption value="lpg-retail-expt">Retail Expt LPG</IonSelectOption>
+                                                <IonSelectOption value="retail-except-lpg">Retail Except LPG</IonSelectOption>
                                                 <IonSelectOption value="lpg-retail">Retail of LPG</IonSelectOption>
                                                 <IonSelectOption value="export-wholesale">Export & Wholesale</IonSelectOption>
                                                 <IonSelectOption value="drivers">Driver License</IonSelectOption>

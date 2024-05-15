@@ -8,7 +8,7 @@ const ApplicationHistoryStore = new Store({
 //fetch
 export const ApplicationHistory = async (userId) => {
     const fecthApplications = await fetch(
-        `https://amtech-app-qas7x.ondigitalocean.app/api/users/user-applications/${userId}`
+        `https://amtech-app-ya67p.ondigitalocean.app/api/users/user-applications/${userId}`
     );
     const applicationsFound = await fecthApplications.json();
     //

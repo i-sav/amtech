@@ -63,7 +63,7 @@ const CreateUser: React.FC = () => {
         };
 
         const api = axios.create({
-            baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/users`,
+            baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/users`,
         });
         api
             .post("/create-user", UsrData)

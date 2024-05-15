@@ -95,7 +95,7 @@ const LogIn: React.FC = () => {
     };
     setProgress(true);
     const api = axios.create({
-      baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/auth`,
+      baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/auth`,
     });
     api
       .post("/login", loginData)
@@ -163,7 +163,7 @@ const LogIn: React.FC = () => {
     };
     setProgress(true);
     const api = axios.create({
-      baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/auth`,
+      baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/auth`,
     });
     api
       .post("/register", RegisterData)
@@ -211,7 +211,7 @@ const LogIn: React.FC = () => {
 
     setIsFindingAccount(true);
     const api = axios.create({
-      baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/auth`,
+      baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/auth`,
     });
     api
       .post("/find-account-with-email", findAccountData)
@@ -267,7 +267,7 @@ const LogIn: React.FC = () => {
 
     setIsResetting(true);
     const api = axios.create({
-      baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/auth`,
+      baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/auth`,
     });
     api
       .post("/reset-password", ResetPasswordData)

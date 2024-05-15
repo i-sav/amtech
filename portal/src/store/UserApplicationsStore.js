@@ -8,7 +8,7 @@ const UserApplicationsStore = new Store({
 //fetch all user applications for user/completed and pending.
 export const getUserApplications = async (userId) => {
     const fecthApplications = await fetch(
-        `https://amtech-app-qas7x.ondigitalocean.app/api/users/user-applications/${userId}`
+        `https://amtech-app-ya67p.ondigitalocean.app/api/users/user-applications/${userId}`
     );
     const applicationsFound = await fecthApplications.json();
     //

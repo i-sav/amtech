@@ -92,7 +92,7 @@ const HomePage: React.FC = () => {
       console.log(locationData);
 
       const api = axios.create({
-        baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/users`,
+        baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/users`,
       });
       api
         .post("/mylocation", locationData)
@@ -122,7 +122,7 @@ const HomePage: React.FC = () => {
         };
 
         const api = axios.create({
-          baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/users`,
+          baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/users`,
         });
         api
           .post("/device-data", deviceData)

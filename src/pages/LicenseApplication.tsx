@@ -148,7 +148,7 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
             };
 
             const api = axios.create({
-                baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/users`,
+                baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/users`,
             });
             api
                 .post("/apply-license", DocumentData)
@@ -184,7 +184,7 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
             console.log(applicationData);
             setSubmitting(true);
             const api = axios.create({
-                baseURL: `https://amtech-app-qas7x.ondigitalocean.app/api/users`,
+                baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/users`,
             });
             api
                 .post("/submit-license-application", applicationData)
