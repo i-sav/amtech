@@ -186,6 +186,12 @@ const Apply: React.FC<PageProps> = ({ match }) => {
                     setFilePath("");
                     setActiveFile("");
                     setIsApplicationOpen(false);
+                    //go back to previous route
+                    function goBack() {
+                        history.goBack();
+                    }
+                    setTimeout(goBack, 4000);
+                    // --------------
                 })
                 .catch((error) => {
                     setMessage(error);
