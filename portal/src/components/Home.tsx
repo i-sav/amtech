@@ -22,6 +22,7 @@ import ClientProfile from "../pages/ClientProfiles";
 import CurrentUserDetailsStore from "../store/CurrentUserDataStore";
 import AllUserDocuments from "../pages/UserDocs";
 import ApplyLicense from "../pages/LicenseApplication";
+import Apply from "../pages/ApplyPage";
 
 
 
@@ -59,6 +60,11 @@ const Home: React.FC = (RouteComponentProps) => {
           path="/license-application/:id"
           render={(match) => <ApplyLicense {...match} />}
         ></Route>
+        <Route
+            exact
+            path="/apply/:id"
+            render={(match) => <Apply {...match} />}
+          ></Route>
         <Route exact path="/profile">
           <Profile />
         </Route>

@@ -494,378 +494,316 @@ const HomePage: React.FC = () => {
                       <IonLabel><b>Licenses</b></IonLabel>
                     </IonListHeader>
 
-                    <IonItem>
+                    <IonItem onClick={(e) => {
+                      e.preventDefault();
+                      history.push("/apply/" + "Transport of petroleum products(Except LPG) by Road", {
+                        state: {
+                          category: "transport",
+                          title: "Transport of petroleum products(Except LPG) by Road",
+                          amount: 0,
+                          requirements: [
+                            {
+                              type: "CR12",
+                              description: "CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application"
+                            },
+                            {
+                              type: "RegistrationCerticate",
+                              description: "Certificate of Incorporation / Business Registration Certificate"
+                            },
+                            {
+                              type: "TCC",
+                              description: "Valid Tax Compliance Certificate from Kenya Revenue Authority"
+                            },
+                            {
+                              type: "DirectorIDs",
+                              description: "Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors"
+                            },
+                            {
+                              type: "SBP",
+                              description: "Single Business Permit to operate business from the respective County Government"
+                            },
+                            {
+                              type: "InspectionReports",
+                              description: "A valid Motor Vehicle Inspection Certificate for each prime mover and trailer"
+                            },
+                            {
+                              type: "LogBooks&Lease",
+                              description: "Log book for each prime mover and trailer (Attach a valid lease agreement if vehicle not in the name of the applicant)"
+                            },
+                            {
+                              type: "ListOfvehicles",
+                              description: "A list of vehicles; paired prime movers and trailers where necessary (In Microsoft Excel)"
+                            },
+                            {
+                              type: "CalibrationReports",
+                              description: "A valid calibration certificate for the tank mounted on each trailer"
+                            },
+                            {
+                              type: "FireCertificates",
+                              description: "Fire Clearance Certificate for the vehicle(s) from the respective County Fire Department"
+                            },
+                            {
+                              type: "WorkPermitForForeigners",
+                              description: "Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)"
+                            },
+                            {
+                              type: "EmergencyResponsePlan",
+                              description: "A summary Highway Emergency Response Plan from the applicant"
+                            },
+                          ]
+                        }
+                      });
+                    }}>
                       <IonIcon icon={chevronForwardCircleOutline} size="large" color="primary">
                       </IonIcon>
                       <IonLabel className="ion-padding ion-text-wrap">
                         <h2><b>Transport of petroleum products(Except LPG) by Road</b></h2>
-                        <p id="click-transport"><b>Check out the Requirements</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
+                        <p id="click-transport"><b>See requirements & apply</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
                       </IonLabel>
-                      <IonButton shape="round" onClick={() => {
-                        setIsApplicationOpen(true);
-                        setApplicationTitle("Transport of petroleum products(Except LPG) by Road");
-                        setApplicationCategory("transport");
-                        setAmount(0);
-                        setRequirements([
-                          {
-                            type: "CR12",
-                            description: "CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application"
-                          },
-                          {
-                            type: "RegistrationCerticate",
-                            description: "Certificate of Incorporation / Business Registration Certificate"
-                          },
-                          {
-                            type: "TCC",
-                            description: "Valid Tax Compliance Certificate from Kenya Revenue Authority"
-                          },
-                          {
-                            type: "DirectorIDs",
-                            description: "Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors"
-                          },
-                          {
-                            type: "SBP",
-                            description: "Single Business Permit to operate business from the respective County Government"
-                          },
-                          {
-                            type: "InspectionReports",
-                            description: "A valid Motor Vehicle Inspection Certificate for each prime mover and trailer"
-                          },
-                          {
-                            type: "LogBooks&Lease",
-                            description: "Log book for each prime mover and trailer (Attach a valid lease agreement if vehicle not in the name of the applicant)"
-                          },
-                          {
-                            type: "ListOfvehicles",
-                            description: "A list of vehicles; paired prime movers and trailers where necessary (In Microsoft Excel)"
-                          },
-                          {
-                            type: "CalibrationReports",
-                            description: "A valid calibration certificate for the tank mounted on each trailer"
-                          },
-                          {
-                            type: "FireCertificates",
-                            description: "Fire Clearance Certificate for the vehicle(s) from the respective County Fire Department"
-                          },
-                          {
-                            type: "WorkPermitForForeigners",
-                            description: "Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)"
-                          },
-                          {
-                            type: "EmergencyResponsePlan",
-                            description: "A summary Highway Emergency Response Plan from the applicant"
-                          },
-                        ])
-                      }}>Apply Now</IonButton>
+                      <IonButton shape="round">Apply Now</IonButton>
                     </IonItem>
-                    <IonPopover trigger="click-transport" triggerAction="click" side="bottom" alignment="center" size="cover">
-                      <IonContent class="ion-padding">
-                        <IonListHeader>
-                          <IonLabel><b>Requirements</b></IonLabel>
-                        </IonListHeader>
-                        <p>1) CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application. Further, if a Limited company appears as part of the shareholders, provide the company's CR12 plus all the Directors' IDs)</p>
-                        <p>2) Certificate of Incorporation / Business Registration Certificate</p>
-                        <p>3) Valid Tax Compliance Certificate from Kenya Revenue Authority</p>
-                        <p>4) Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors</p>
-                        <p>5) Single Business Permit to operate business from the respective County Government</p>
-                        <p>6) A valid Motor Vehicle Inspection Certificate for each prime mover and trailer</p>
-                        <p>7) Log book for each prime mover and trailer (Attach a valid lease agreement if vehicle not in the name of the applicant)</p>
-                        <p>8)A list of vehicles; paired prime movers and trailers where necessary (In Microsoft Excel)</p>
-                        <p>9)A valid calibration certificate for the tank mounted on each trailer</p>
-                        <p>10)Fire Clearance Certificate for the vehicle(s) from the respective County Fire Department</p>
-                        <p>11)Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)</p>
-                        <p>12)A summary Highway Emergency Response Plan from the applicant</p>
-                      </IonContent>
-                    </IonPopover>
 
 
-                    <IonItem>
+                    <IonItem onClick={(e) => {
+                      e.preventDefault();
+                      history.push("/apply/" + "Transport of petroleum products(Except LPG) by Road", {
+                        state: {
+                          category: "lpg-retail",
+                          title: "Retail of LPG in Cylinders",
+                          amount: 0,
+                          requirements: [
+                            {
+                              type: "CR12",
+                              description: "CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application"
+                            },
+                            {
+                              type: "RegistrationCerticate",
+                              description: "Certificate of Incorporation / Business Registration Certificate"
+                            },
+                            {
+                              type: "TCC",
+                              description: "Valid Tax Compliance Certificate from Kenya Revenue Authority"
+                            },
+                            {
+                              type: "DirectorIDs",
+                              description: "Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors"
+                            },
+                            {
+                              type: "SBP",
+                              description: "Single Business Permit to operate business from the respective County Government"
+                            },
+                            {
+                              type: "AuthorizationLetters",
+                              description: "Proof of ownership of at least 5,000 cylinders of either 0.5,1,3,6 or 13kg or a written authority for distributorship of a particular brand from a licensed LPG cylinder brand owner;"
+                            },
+                            {
+                              type: "Weights&MeasuresCertificate",
+                              description: "Scanned original copy of a valid weighing scale calibration certificate from Weights and Measures department"
+                            },
+                            {
+                              type: "FireCertificates",
+                              description: "Scanned original copy of a valid fire certificate for the premises from the County Government"
+                            },
+                            {
+                              type: "WorkPermitForForeigners",
+                              description: "Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)"
+                            },
+                            {
+                              type: "PhotoOfCylinderCage",
+                              description: "A colour photograph of the retail point clearly showing the cylinder holding cage and the neighbouring premises."
+                            },
+                          ]
+                        }
+                      });
+                    }}>
                       <IonIcon icon={chevronForwardCircleOutline} size="large" color="primary">
                       </IonIcon>
                       <IonLabel className="ion-padding ion-text-wrap">
                         <h2><b>Retail of LPG in Cylinders</b></h2>
 
-                        <p id="click-LPG"><b>Check out the Requirements</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
+                        <p id="click-LPG"><b>See requirements & apply</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
                       </IonLabel>
-                      <IonButton shape="round" onClick={() => {
-                        setIsApplicationOpen(true);
-                        setApplicationTitle("Retail of LPG in Cylinders");
-                        setApplicationCategory("lpg-retail");
-                        setAmount(0);
-                        setRequirements([
-                          {
-                            type: "CR12",
-                            description: "CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application"
-                          },
-                          {
-                            type: "RegistrationCerticate",
-                            description: "Certificate of Incorporation / Business Registration Certificate"
-                          },
-                          {
-                            type: "TCC",
-                            description: "Valid Tax Compliance Certificate from Kenya Revenue Authority"
-                          },
-                          {
-                            type: "DirectorIDs",
-                            description: "Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors"
-                          },
-                          {
-                            type: "SBP",
-                            description: "Single Business Permit to operate business from the respective County Government"
-                          },
-                          {
-                            type: "AuthorizationLetters",
-                            description: "Proof of ownership of at least 5,000 cylinders of either 0.5,1,3,6 or 13kg or a written authority for distributorship of a particular brand from a licensed LPG cylinder brand owner;"
-                          },
-                          {
-                            type: "Weights&MeasuresCertificate",
-                            description: "Scanned original copy of a valid weighing scale calibration certificate from Weights and Measures department"
-                          },
-                          {
-                            type: "FireCertificates",
-                            description: "Scanned original copy of a valid fire certificate for the premises from the County Government"
-                          },
-                          {
-                            type: "WorkPermitForForeigners",
-                            description: "Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)"
-                          },
-                          {
-                            type: "PhotoOfCylinderCage",
-                            description: "A colour photograph of the retail point clearly showing the cylinder holding cage and the neighbouring premises."
-                          },
-                        ])
-                      }}>Apply Now</IonButton>
+                      <IonButton shape="round">Apply Now</IonButton>
                     </IonItem>
-                    <IonPopover trigger="click-LPG" triggerAction="click" side="bottom" alignment="center" size="cover">
-                      <IonContent class="ion-padding">
-                        <IonListHeader>
-                          <IonLabel><b>Requirements</b></IonLabel>
-                        </IonListHeader>
-                        <p>1) CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application. Further, if a Limited company appears as part of the shareholders, provide the company's CR12 plus all the Directors' IDs)</p>
-                        <p>2) Certificate of Incorporation / Business Registration Certificate</p>
-                        <p>3) Valid Tax Compliance Certificate from Kenya Revenue Authority</p>
-                        <p>4) Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors</p>
-                        <p>5) Single Business Permit to operate business from the respective County Government</p>
-                        <p>6) Proof of ownership of at least 5,000 cylinders of either 0.5,1,3,6 or 13kg or a written authority for distributorship of a particular brand from a licensed LPG cylinder brand owner;</p>
-                        <p>7) Scanned original copy of a valid weighing scale calibration certificate from Weights and Measures department</p>
-                        <p>8)Scanned original copy of a valid fire certificate for the premises from the County Government</p>
-                        <p>9)Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)</p>
-                        <p>10)A colour photograph of the retail point clearly showing the cylinder holding cage and the neighbouring premises.</p>
-                      </IonContent>
-                    </IonPopover>
 
-                    <IonItem>
+                    <IonItem onClick={(e) => {
+                      e.preventDefault();
+                      history.push("/apply/" + "Retail of Petroleum Products (except LPG)", {
+                        state: {
+                          category: "lpg-retail-expt",
+                          title: "Retail of Petroleum Products (except LPG)",
+                          amount: 0,
+                          requirements: [
+                            {
+                              type: "CR12",
+                              description: "CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application"
+                            },
+                            {
+                              type: "RegistrationCerticate",
+                              description: "Certificate of Incorporation / Business Registration Certificate"
+                            },
+                            {
+                              type: "TCC",
+                              description: "Valid Tax Compliance Certificate from Kenya Revenue Authority"
+                            },
+                            {
+                              type: "DirectorIDs",
+                              description: "Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors"
+                            },
+                            {
+                              type: "SBP",
+                              description: "Single Business Permit to operate business from the respective County Government"
+                            },
+                            {
+                              type: "FireCertificates",
+                              description: "Fire Clearance Certificate for the facility from the respective County Fire Department"
+                            },
+
+                            {
+                              type: "CalibrationReports",
+                              description: "A valid certificate of calibration for the Underground Storage tank(s)"
+                            },
+                            {
+                              type: "PressureTests",
+                              description: "A pressure test report for the petroleum tanks and pipelines at the facility; (not older than 60 months)"
+                            },
+                            {
+                              type: "LandLeaseOrTitle",
+                              description: "Proof of land ownership (copy of title deed in the name of company/director(s)). In the case of long term land lease, copy of duly registered lease agreement in the name of the Applicant company plus the title deed of the land owner."
+                            },
+                            {
+                              type: "PhysicalPlanning",
+                              description: "Certificate of Compliance with the Physical Planning Act 2019 (PPA5 or PPA2)"
+                            },
+                            {
+                              type: "WorkPermitForForeigners",
+                              description: "Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)"
+                            },
+                            {
+                              type: "PhotoOfStation",
+                              description: "Picture of the station captioning the frontage, canopy, and pumps"
+                            },
+                            {
+                              type: "EmergencyResponsePlan",
+                              description: "A summary Emergency Response Plan from the applicant."
+                            },
+                            {
+                              type: "CalibrationReportsOfDispensingUnits",
+                              description: "A valid certificate of calibration of the petroleum dispensing units’ meters from the Department of Weights and Measures;"
+                            },
+                            {
+                              type: "NEMA",
+                              description: "A valid Environmental Impact Assessment licence from NEMA for the facility"
+                            },
+
+                          ]
+                        }
+                      });
+                    }}>
                       <IonIcon icon={chevronForwardCircleOutline} size="large" color="primary">
                       </IonIcon>
                       <IonLabel className="ion-padding ion-text-wrap">
                         <h2><b>Retail of Petroleum Products (except LPG)
                         </b></h2>
-                        <p id="retail"><b>Check out the Requirements</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
+                        <p id="retail"><b>See requirements & apply</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
                       </IonLabel>
-                      <IonButton shape="round" onClick={() => {
-                        setIsApplicationOpen(true);
-                        setApplicationTitle("Retail of Petroleum Products (except LPG)");
-                        setApplicationCategory("lpg-retail-expt");
-                        setAmount(0);
-                        setRequirements([
-                          {
-                            type: "CR12",
-                            description: "CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application"
-                          },
-                          {
-                            type: "RegistrationCerticate",
-                            description: "Certificate of Incorporation / Business Registration Certificate"
-                          },
-                          {
-                            type: "TCC",
-                            description: "Valid Tax Compliance Certificate from Kenya Revenue Authority"
-                          },
-                          {
-                            type: "DirectorIDs",
-                            description: "Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors"
-                          },
-                          {
-                            type: "SBP",
-                            description: "Single Business Permit to operate business from the respective County Government"
-                          },
-                          {
-                            type: "FireCertificates",
-                            description: "Fire Clearance Certificate for the facility from the respective County Fire Department"
-                          },
-
-                          {
-                            type: "CalibrationReports",
-                            description: "A valid certificate of calibration for the Underground Storage tank(s)"
-                          },
-                          {
-                            type: "PressureTests",
-                            description: "A pressure test report for the petroleum tanks and pipelines at the facility; (not older than 60 months)"
-                          },
-                          {
-                            type: "LandLeaseOrTitle",
-                            description: "Proof of land ownership (copy of title deed in the name of company/director(s)). In the case of long term land lease, copy of duly registered lease agreement in the name of the Applicant company plus the title deed of the land owner."
-                          },
-                          {
-                            type: "PhysicalPlanning",
-                            description: "Certificate of Compliance with the Physical Planning Act 2019 (PPA5 or PPA2)"
-                          },
-                          {
-                            type: "WorkPermitForForeigners",
-                            description: "Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)"
-                          },
-                          {
-                            type: "PhotoOfStation",
-                            description: "Picture of the station captioning the frontage, canopy, and pumps"
-                          },
-                          {
-                            type: "EmergencyResponsePlan",
-                            description: "A summary Emergency Response Plan from the applicant."
-                          },
-                          {
-                            type: "CalibrationReportsOfDispensingUnits",
-                            description: "A valid certificate of calibration of the petroleum dispensing units’ meters from the Department of Weights and Measures;"
-                          },
-                          {
-                            type: "NEMA",
-                            description: "A valid Environmental Impact Assessment licence from NEMA for the facility"
-                          },
-
-                        ])
-                      }}>Apply Now</IonButton>
+                      <IonButton shape="round">Apply Now</IonButton>
                     </IonItem>
-                    <IonPopover trigger="retail" triggerAction="click" side="bottom" alignment="center" size="cover">
-                      <IonContent class="ion-padding">
-                        <IonListHeader>
-                          <IonLabel><b>Requirements</b></IonLabel>
-                        </IonListHeader>
-                        <p>1) CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application. Further, if a Limited company appears as part of the shareholders, provide the company's CR12 plus all the Directors' IDs)</p>
-                        <p>2) Certificate of Incorporation / Business Registration Certificate</p>
-                        <p>3) Valid Tax Compliance Certificate from Kenya Revenue Authority</p>
-                        <p>4) Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors</p>
-                        <p>5) Single Business Permit to operate business from the respective County Government</p>
-                        <p>6) Fire Clearance Certificate for the facility from the respective County Fire Department</p>
-                        <p>7) A valid copy of certificate of registration of work place from DOSHS</p>
-                        <p>8)A valid certificate of calibration for the Underground Storage tank(s)</p>
-                        <p>9)A pressure test report for the petroleum tanks and pipelines at the facility; (not older than 60 months)</p>
-                        <p>10)Proof of land ownership (copy of title deed in the name of company/director(s)). In the case of long term land lease, copy of duly registered lease agreement in the name of the Applicant company plus the title deed of the land owner.</p>
-                        <p>11)Certificate of Compliance with the Physical Planning Act 2019 (PPA5 or PPA2);</p>
-                        <p>12)Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)</p>
-                        <p>13)Picture of the station captioning the frontage, canopy, and pumps</p>
-                        <p>14)A summary Emergency Response Plan from the applicant.</p>
-                        <p>15)A valid certificate of calibration of the petroleum dispensing units’ meters from the Department of Weights and Measures;</p>
-                        <p>16)A valid Environmental Impact Assessment licence from NEMA for the facility;</p>
-                      </IonContent>
-                    </IonPopover>
 
-                    <IonItem>
+                    <IonItem onClick={(e) => {
+                      e.preventDefault();
+                      history.push("/apply/" + "Export and Wholesale of Petroleum Products(Except LPG)", {
+                        state: {
+                          category: "export-wholesale",
+                          title: "Export and Wholesale of Petroleum Products(Except LPG)",
+                          amount: 0,
+                          requirements: [
+                            {
+                              type: "CR12",
+                              description: "CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application"
+                            },
+                            {
+                              type: "RegistrationCerticate",
+                              description: "Certificate of Incorporation / Business Registration Certificate"
+                            },
+                            {
+                              type: "TCC",
+                              description: "Valid Tax Compliance Certificate from Kenya Revenue Authority"
+                            },
+                            {
+                              type: "DirectorIDs",
+                              description: "Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors"
+                            },
+                            {
+                              type: "SBP",
+                              description: "Single Business Permit to operate business from the respective County Government"
+                            },
+
+                            {
+                              type: "WorkPermitForForeigners",
+                              description: "Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)"
+                            },
+                          ]
+                        }
+                      });
+                    }}>
                       <IonIcon icon={chevronForwardCircleOutline} size="large" color="primary">
                       </IonIcon>
                       <IonLabel className="ion-padding ion-text-wrap">
                         <h2><b>Export and Wholesale of Petroleum Products(Except LPG)
                         </b></h2>
-                        <p id="export"><b>Check out the Requirements</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
+                        <p id="export"><b>See requirements & apply</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
                       </IonLabel>
-                      <IonButton shape="round" onClick={() => {
-                        setIsApplicationOpen(true);
-                        setApplicationTitle("Export and Wholesale of Petroleum Products(Except LPG)");
-                        setApplicationCategory("export-wholesale");
-                        setAmount(0);
-                        setRequirements([
-                          {
-                            type: "CR12",
-                            description: "CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application"
-                          },
-                          {
-                            type: "RegistrationCerticate",
-                            description: "Certificate of Incorporation / Business Registration Certificate"
-                          },
-                          {
-                            type: "TCC",
-                            description: "Valid Tax Compliance Certificate from Kenya Revenue Authority"
-                          },
-                          {
-                            type: "DirectorIDs",
-                            description: "Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors"
-                          },
-                          {
-                            type: "SBP",
-                            description: "Single Business Permit to operate business from the respective County Government"
-                          },
-
-                          {
-                            type: "WorkPermitForForeigners",
-                            description: "Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)"
-                          },
-                        ])
-                      }}>Apply Now</IonButton>
+                      <IonButton shape="round">Apply Now</IonButton>
                     </IonItem>
-                    <IonPopover trigger="export" triggerAction="click" side="bottom" alignment="center" size="cover">
-                      <IonContent class="ion-padding">
-                        <IonListHeader>
-                          <IonLabel><b>Requirements</b></IonLabel>
-                        </IonListHeader>
-                        <p>1) CR12 from the Registrar of companies (should not be older than 1 year at the time of submission of the application. Further, if a Limited company appears as part of the shareholders, provide the company's CR12 plus all the Directors' IDs)</p>
-                        <p>2) Certificate of Incorporation / Business Registration Certificate</p>
-                        <p>3) Valid Tax Compliance Certificate from Kenya Revenue Authority </p>
-                        <p>4) Legible Copies of Identification Documents i.e. IDs/Passports for all the Company directors</p>
-                        <p>5) Single Business Permit to operate business from the respective County Government</p>
-                        <p>6) Valid Work Permits Class “G” for all foreign directors working in Kenya (Foreign directors not resident in Kenya should provide a notarized declaration. Any employee given Powers of Attorney by a foreign director should provide a copy of their ID)</p>
-                      </IonContent></IonPopover>
 
-                    <IonItem>
+                    <IonItem onClick={(e) => {
+                      e.preventDefault();
+                      history.push("/apply/" + "Driver Certification - Driver License", {
+                        state: {
+                          category: "drivers",
+                          title: "Driver Certification - Driver License",
+                          amount: 0,
+                          requirements: [
+                            {
+                              type: "ID",
+                              description: "Scanned original copies of Identification documents (IDs or Passports)"
+                            },
+                            {
+                              type: "FitnessLetter",
+                              description: "Valid Certification of Fitness for Drivers from Designated Health Practitioner(DOSHS approved Doctors)"
+                            },
+                            {
+                              type: "DL",
+                              description: "A valid driving licence for each driver"
+                            },
+
+                            {
+                              type: "GoodConductCertificate",
+                              description: "Certificate of Good Conduct"
+                            },
+                            {
+                              type: "DefensiveDrivingCertificate",
+                              description: "Proof of training on defensive driving from a National Industrial Training Authority approved driving school."
+                            },
+                            {
+                              type: "PassportPhoto",
+                              description: "Passport size photo of the driver"
+                            },
+                          ]
+                        }
+                      });
+                    }}>
                       <IonIcon icon={chevronForwardCircleOutline} size="large" color="primary">
                       </IonIcon>
                       <IonLabel className="ion-padding ion-text-wrap">
                         <h2><b>Driver Certification / Driver License
                         </b></h2>
-                        <p id="driver"><b>Check out the Requirements</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
+                        <p id="driver"><b>See requirements & apply</b> <IonIcon icon={arrowForwardOutline}></IonIcon></p>
                       </IonLabel>
-                      <IonButton shape="round" onClick={() => {
-                        setIsApplicationOpen(true);
-                        setApplicationTitle("Driver Certification - Driver License");
-                        setApplicationCategory("drivers");
-                        setAmount(0);
-                        setRequirements([
-                          {
-                            type: "ID",
-                            description: "Scanned original copies of Identification documents (IDs or Passports)"
-                          },
-                          {
-                            type: "FitnessLetter",
-                            description: "Valid Certification of Fitness for Drivers from Designated Health Practitioner(DOSHS approved Doctors)"
-                          },
-                          {
-                            type: "DL",
-                            description: "A valid driving licence for each driver"
-                          },
+                      <IonButton shape="round">Apply Now</IonButton>
 
-                          {
-                            type: "GoodConductCertificate",
-                            description: "Certificate of Good Conduct"
-                          },
-                          {
-                            type: "DefensiveDrivingCertificate",
-                            description: "Proof of training on defensive driving from a National Industrial Training Authority approved driving school."
-                          },
-                          {
-                            type: "PassportPhoto",
-                            description: "Passport size photo of the driver"
-                          },
-                        ])
-                      }}>Apply Now</IonButton>
                     </IonItem>
-                    <IonPopover trigger="driver" triggerAction="click" side="bottom" alignment="center" size="cover">
-                      <IonContent class="ion-padding">
-                        <IonListHeader>
-                          <IonLabel><b>Requirements</b></IonLabel>
-                        </IonListHeader>
-                        <p>1) Scanned original copies of Identification documents (IDs or Passports) for the driver</p>
-                        <p>2) Valid Certification of Fitness for Drivers from Designated Health Practitioner(DOSHS approved Doctors)</p>
-                        <p>3) A valid driving licence for each driver </p>
-                        <p>4) Certificate of Good Conduct</p>
-                        <p>5) Passport size photo of the driver</p>
-                        <p>6) Proof of training on defensive driving from a National Industrial Training Authority approved driving school.      </p>
-                      </IonContent></IonPopover>
 
                   </IonCol>
                   <IonCol size="3">
