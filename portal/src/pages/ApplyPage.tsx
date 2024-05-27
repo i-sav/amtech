@@ -29,7 +29,7 @@ import { RouteComponentProps, useLocation } from "react-router";
 import "@ionic/react/css/ionic-swiper.css";
 import ButtonProgress from "../components/ButtonProgress";
 import { arrowForwardOutline, checkmarkDoneCircleOutline, documentAttachOutline } from "ionicons/icons";
-import MyApplicationsStore from "../store/ApplicationsStore";
+import MyApplicationsStore, { getApplications } from "../store/ApplicationsStore";
 import { title } from "process";
 import CurrentUserDetailsStore from "../store/CurrentUserDataStore";
 
@@ -147,7 +147,7 @@ const Apply: React.FC<PageProps> = ({ match }) => {
             api
                 .post("/apply-license", DocumentData)
                 .then((res) => {
-                    //getApplications(userId);
+                    getApplications(userId);
                     setMessage("Document has been uploaded. Upload other required documents and finish your application");
                     setIserror(true);
                     setProgress(false);
