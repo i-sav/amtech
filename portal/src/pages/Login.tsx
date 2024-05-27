@@ -277,8 +277,9 @@ const LogIn: React.FC = () => {
         //Reload to login
         function proceedToLogIn() {
           //history.push("/login");
-          window.history.replaceState({}, "Log In", "/login");
-          document.location.reload();
+          // window.history.replaceState({}, "Home", "/");
+          // document.location.reload();
+          setShowResetModal(false);
         }
 
         if (res.data === "PassUpdated!") {
