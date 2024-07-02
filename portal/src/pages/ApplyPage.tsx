@@ -142,7 +142,7 @@ const Apply: React.FC<PageProps> = ({ match }) => {
             };
 
             const api = axios.create({
-                baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/users`,
+                baseURL: `https://octopus-app-5uj8p.ondigitalocean.app/api/users`,
             });
             api
                 .post("/apply-license", DocumentData)
@@ -174,7 +174,7 @@ const Apply: React.FC<PageProps> = ({ match }) => {
             //console.log(applicationData);
             setSubmitting(true);
             const api = axios.create({
-                baseURL: `https://amtech-app-ya67p.ondigitalocean.app/api/users`,
+                baseURL: `https://octopus-app-5uj8p.ondigitalocean.app/api/users`,
             });
             api
                 .post("/submit-license-application", applicationData)

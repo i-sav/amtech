@@ -16,7 +16,7 @@ export const fetchCurrentUserDetails = async (id) => {
     //userId
     const user = id;
     //Initiate details request
-    const UsrInfo = await fetch(`https://amtech-app-ya67p.ondigitalocean.app/api/users/${user}`);
+    const UsrInfo = await fetch(`https://octopus-app-5uj8p.ondigitalocean.app/api/users/${user}`);
 
     const UsrData = await UsrInfo.json();
 

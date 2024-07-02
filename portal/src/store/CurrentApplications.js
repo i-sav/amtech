@@ -8,7 +8,7 @@ const CurrentApplicationsStore = new Store({
 //fetch
 export const AllApplications = async (userId) => {
     const fecthApplications = await fetch(
-        `https://amtech-app-ya67p.ondigitalocean.app/api/users/all-applications/${userId}`
+        `https://octopus-app-5uj8p.ondigitalocean.app/api/users/all-applications/${userId}`
     );
     const applicationsFound = await fecthApplications.json();
     //

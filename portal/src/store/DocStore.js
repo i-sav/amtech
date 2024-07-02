@@ -8,7 +8,7 @@ const MyDocumentsStore = new Store({
 //fetch documents for user.
 export const getDocuments = async (userId) => {
     const fecthDocs = await fetch(
-        `https://amtech-app-ya67p.ondigitalocean.app/api/users/documents/${userId}`
+        `https://octopus-app-5uj8p.ondigitalocean.app/api/users/documents/${userId}`
     );
     const documentsFound = await fecthDocs.json();
     //
