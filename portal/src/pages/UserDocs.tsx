@@ -67,7 +67,7 @@ const AllUserDocuments: React.FC = () => {
                                         <DocumentPreview
                                             docId={document._id}
                                             title={document.title}
-                                            docUrl={"https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + document?.documentPath}
+                                            docUrl={"https://fssmofuasqbfyefiygaf.supabase.co/storage/v1/object/public/amtechStorage/" + document?.documentPath}
                                         />
                                     ))
                                 ) : (

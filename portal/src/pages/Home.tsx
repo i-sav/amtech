@@ -266,8 +266,8 @@ const HomePage: React.FC = () => {
     setProgress(true);
     //console.log(blobState);
     const { data, error } = await supabase.storage
-      .from("biva-storage")
-      .upload(`docs/${currentTime + filename}`, blobState, {
+      .from("amtechStorage")
+      .upload(`documents/${currentTime + filename}`, blobState, {
         cacheControl: "3600",
         upsert: false,
       });
@@ -376,7 +376,7 @@ const HomePage: React.FC = () => {
                                 userId={client?._id}
                                 username={client?.username}
                                 company={client?.company}
-                                displayPhoto={"https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + client?.displayPhoto} />
+                                displayPhoto={"https://fssmofuasqbfyefiygaf.supabase.co/storage/v1/object/public/amtechStorage/" + client?.displayPhoto} />
                             ))
                           ) : (
                             <IonCard className="ion-padding">
@@ -425,7 +425,7 @@ const HomePage: React.FC = () => {
                                       <p><b>Attached Documents:</b></p>
                                       <IonRow>
                                         {application?.documents?.map((doc: any, index: any) => (
-                                          <IonCol key={index} size="3" onClick={() => window.open("https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + doc?.documentUrl)}>
+                                          <IonCol key={index} size="3" onClick={() => window.open("https://fssmofuasqbfyefiygaf.supabase.co/storage/v1/object/public/amtechStorage/" + doc?.documentUrl)}>
                                             <p>{doc?.documentType} <IonIcon color="primary" icon={downloadOutline}></IonIcon></p>
                                           </IonCol>
                                         ))}
@@ -475,7 +475,7 @@ const HomePage: React.FC = () => {
                                   key={index}
                                   docId={document._id}
                                   title={document.title}
-                                  docUrl={"https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + document?.documentPath}
+                                  docUrl={"https://fssmofuasqbfyefiygaf.supabase.co/storage/v1/object/public/amtechStorage/" + document?.documentPath}
                                 />
                               ))
                             ) : (
@@ -831,7 +831,7 @@ const HomePage: React.FC = () => {
                                       <p><b>Attached Documents:</b></p>
                                       <IonRow>
                                         {application?.documents?.map((doc: any, index: any) => (
-                                          <IonCol key={index} size="3" onClick={() => window.open("https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + doc?.documentUrl)}>
+                                          <IonCol key={index} size="3" onClick={() => window.open("https://fssmofuasqbfyefiygaf.supabase.co/storage/v1/object/public/amtechStorage/" + doc?.documentUrl)}>
                                             <p>{doc?.documentType} <IonIcon color="primary" icon={downloadOutline}></IonIcon></p>
                                           </IonCol>
                                         ))}

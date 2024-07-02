@@ -53,7 +53,7 @@ const AllClients: React.FC = () => {
                                     userId={client?._id}
                                     username={client?.username}
                                     company={client?.company}
-                                    displayPhoto={"https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + client?.displayPhoto} />
+                                    displayPhoto={"https://fssmofuasqbfyefiygaf.supabase.co/storage/v1/object/public/amtechStorage/" + client?.displayPhoto} />
                             ))
                         ) : (
                             ""

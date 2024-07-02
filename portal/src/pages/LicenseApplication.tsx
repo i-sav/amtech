@@ -111,8 +111,8 @@ const ApplyLicense: React.FC<PageProps> = ({ match }) => {
         setProgress(true);
         //console.log(blobState);
         const { data, error } = await supabase.storage
-            .from("biva-storage")
-            .upload(`docs/${currentTime + filename}`, blobState, {
+            .from("amtechStorage")
+            .upload(`documents/${currentTime + filename}`, blobState, {
                 cacheControl: "3600",
                 upsert: false,
             });

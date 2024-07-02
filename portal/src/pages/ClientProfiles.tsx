@@ -152,8 +152,8 @@ const ClientProfile: React.FC<PageProps> = ({ match }) => {
         setProgress(true);
         //console.log(blobState);
         const { data, error } = await supabase.storage
-            .from("biva-storage")
-            .upload(`docs/${currentTime + filename}`, blobState, {
+            .from("amtechStorage")
+            .upload(`documents/${currentTime + filename}`, blobState, {
                 cacheControl: "3600",
                 upsert: false,
             });
@@ -284,7 +284,7 @@ const ClientProfile: React.FC<PageProps> = ({ match }) => {
                                                     <DocumentPreview
                                                         docId={document._id}
                                                         title={document.title}
-                                                        docUrl={"https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + document?.documentPath}
+                                                        docUrl={"https://fssmofuasqbfyefiygaf.supabase.co/storage/v1/object/public/amtechStorage/" + document?.documentPath}
                                                     />
                                                 ))
                                             ) : (
@@ -322,7 +322,7 @@ const ClientProfile: React.FC<PageProps> = ({ match }) => {
                                                                 <p><b>Attached Documents:</b></p>
                                                                 <IonRow>
                                                                     {application?.documents?.map((doc: any, index: any) => (
-                                                                        <IonCol size="3" onClick={() => window.open("https://mbttpimkgallkklqbndt.supabase.co/storage/v1/object/public/biva-storage/" + doc?.documentUrl)}>
+                                                                        <IonCol size="3" onClick={() => window.open("https://fssmofuasqbfyefiygaf.supabase.co/storage/v1/object/public/amtechStorage/" + doc?.documentUrl)}>
                                                                             <p>{doc?.documentType} <IonIcon color="primary" icon={downloadOutline}></IonIcon></p>
                                                                         </IonCol>
                                                                     ))}
