@@ -23,6 +23,7 @@ import CurrentUserDetailsStore from "../store/CurrentUserDataStore";
 import AllUserDocuments from "../pages/UserDocs";
 import ApplyLicense from "../pages/LicenseApplication";
 import Apply from "../pages/ApplyPage";
+import GenerateQr from "../pages/QRGenerator";
 
 
 
@@ -61,15 +62,18 @@ const Home: React.FC = (RouteComponentProps) => {
           render={(match) => <ApplyLicense {...match} />}
         ></Route>
         <Route
-            exact
-            path="/apply/:id"
-            render={(match) => <Apply {...match} />}
-          ></Route>
+          exact
+          path="/apply/:id"
+          render={(match) => <Apply {...match} />}
+        ></Route>
         <Route exact path="/profile">
           <Profile />
         </Route>
         <Route exact path="/add-user">
           <AddUser />
+        </Route>
+        <Route exact path="/qr-pdf">
+          <GenerateQr />
         </Route>
         <Route exact path="/about">
           <About />
