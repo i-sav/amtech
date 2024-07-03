@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     IonContent,
     IonPage,
@@ -13,17 +13,59 @@ import {
     IonRow,
     IonCol,
     IonButton,
+    IonToast,
+    IonItem,
+    IonIcon,
+    IonInput,
+    IonDatetime,
 } from "@ionic/react";
 import QRCode from 'react-qr-code';
+import { parseISO, format } from "date-fns";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 import "@ionic/react/css/ionic-swiper.css";
 import TabsContext from "../components/TabsContext";
+import { documentAttachOutline } from "ionicons/icons";
+import ButtonProgress from "../components/ButtonProgress";
 
 const GenerateQr: React.FC = () => {
+
+    // hide tabs context
     const { setShowTabs } = React.useContext(TabsContext);
     //hiding tabs on page when it loads
+
+    //process qr code states
+    const qrRef = useRef(null);
+    const [file, setFile] = useState<any>();
+    const [iserror, setIserror] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>("");
+    const [progress, setProgress] = useState<boolean>(false);
+    //form data states
+    const [companyName, setCompantName] = useState<string>("");
+    const [officerInCharge, setOfficerinCharge] = useState<string>("");
+    const [dateOfIssue, setDateOfIssue] = useState<string>("");
+    const [expiryDate, setExpiryDate] = useState<string>("");
+    //
+    //format date
+    //format date
+    const formatdate = (value: string) => {
+        return format(parseISO(value), "dd.MM.yyyy");
+    };
+    //
+    //current Date
+    const currentDate = new Date();
+    const minDate = currentDate.toISOString();
+    //time stamp
+    const currentTimeStamp = new Date().getTime()
+
+    //const 1 year ahead to allow selection of expiry date
+    // Set maxDate to 1 year ahead
+    const nextYear = new Date(currentDate.getFullYear() + 2, currentDate.getMonth(), currentDate.getDate());
+    const maxDate = nextYear.toISOString();
+    //
+
     useEffect(() => {
         setShowTabs(false);
         return () => {
@@ -31,48 +73,116 @@ const GenerateQr: React.FC = () => {
         };
     }, []);
 
-    //process qr code
-    const qrRef = useRef(null);
 
+    //data to be attached at the QR
     const data = {
-        Company: "AMTECH LTD",
-        License: "LPG Transport",
-        ValidTill: "May 29Th 2025",
-    }; // Replace with your data
+        CompanyName: companyName,
+        OfficerInCharge: officerInCharge,
+        DateOfIssue: dateOfIssue,
+        ExpiryDate: expiryDate,
+    };
+    // Replace with your data
 
+    //
+    //const open dialog
+    const openFileDialog = () => {
+        (document as any).getElementById("pdfToUpload").click();
+    }
+
+    //const open dialog
+    const handleFileChange = (event: any) => {
+        (document as any).getElementById("pdfToUpload").click();
+        setFile(event.target.files[0]);
+    }
+
+    //
     const generatePDF = async () => {
-        const pdf = new jsPDF();
+        //check if pdf has been selected
+        if (!file) {
+            setMessage('Please select a PDF file to attach Qr code.');
+            setIserror(true);
+            return;
+        }
+        if (!companyName) {
+            setMessage('Please enter the Company Name');
+            setIserror(true);
+            return;
+        }
+        if (!officerInCharge) {
+            setMessage('Please enter the name of Officer in charge');
+            setIserror(true);
+            return;
+        }
+        if (!dateOfIssue) {
+            setMessage('Please enter the license date of issue');
+            setIserror(true);
+            return;
+        }
+        if (!expiryDate) {
+            setMessage('Please enter the license expiry date');
+            setIserror(true);
+            return;
+        }
 
-        // Add headers and paragraphs to the PDF
-        pdf.setFontSize(22);
-        pdf.text('Document Title', 10, 20);
-
-        pdf.setFontSize(16);
-        pdf.text('Header 1', 10, 30);
-
-        pdf.setFontSize(12);
-        pdf.text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non urna et mauris luctus dignissim. Vivamus placerat, urna id fringilla varius, erat erat pharetra metus, vel sollicitudin dolor magna in nunc.', 10, 40, { maxWidth: 180 });
-
-        pdf.setFontSize(16);
-        pdf.text('Header 2', 10, 70);
-
-        pdf.setFontSize(12);
-        pdf.text('Sed vitae orci non urna suscipit dictum. Nam euismod massa ac ipsum interdum, et pharetra dui blandit. Curabitur at tortor in nulla ullamcorper vehicula. Donec vehicula, libero at dapibus lacinia, lectus odio pharetra metus, sed fermentum lacus urna ut felis.', 10, 80, { maxWidth: 180 });
-
-        // Capture QR code as an image
+        //buffer arary
+        const arrayBuffer = await file.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(arrayBuffer);
+        //
+        const pages = pdfDoc.getPages();
+        const firstPage = pages[0];
+        const { width, height } = firstPage.getSize();
+        //
         const qrElement = qrRef.current;
         if (qrElement) {
             const canvas = await html2canvas(qrElement);
             const imgData = canvas.toDataURL('image/png');
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            const qrSize = 50; // size of the QR code in the PDF
-            pdf.addImage(imgData, 'PNG', pdfWidth - qrSize - 10, pdfHeight - qrSize - 10, qrSize, qrSize);
-        }
+            //draw qr code
+            const qrImage = await pdfDoc.embedPng(imgData);
+            const qrSize = 90;
+            const qrX = width - qrSize - 40;
+            const qrY = 50;
 
-        // Save or print the PDF
-        pdf.save('document.pdf');
+            firstPage.drawImage(qrImage, {
+                x: qrX,
+                y: qrY,
+                width: qrSize,
+                height: qrSize,
+            });
+            //embed text
+            const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+            const text = "Powered by Amtech Ltd";
+            const fontSize = 12;
+            const textWidth = font.widthOfTextAtSize(text, fontSize);
+
+            firstPage.drawText(text, {
+                x: qrX + (qrSize - textWidth) / 2,
+                y: qrY - fontSize - 5,
+                size: fontSize,
+                font: font,
+                color: rgb(0, 0, 0),
+            });
+            //save pdf
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `NewQRDocument${currentTimeStamp}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            //stop the loader
+            setProgress(false);
+            //
+        }
     };
+    //
+
+    //process the pdf
+    const processingPDF = async () => {
+        //delay for 3 seconds
+        setProgress(true);
+        setTimeout(generatePDF, 3000);
+    }
 
 
     return (
@@ -85,23 +195,117 @@ const GenerateQr: React.FC = () => {
                     <IonTitle>Generate PDF with details in QR code</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent fullscreen className="ion-padding ion-text-center">
                 <IonGrid>
                     <IonRow>
-                        <IonCol size="2"></IonCol>
-                        <IonCol size="8" className="ion-text-center">
-                            <IonListHeader className="ion-text-center">
+
+                        <IonCol size="3" className="ion-padding">
+                            <IonListHeader>
+                                <IonLabel color="primary"><b>Select PDF</b></IonLabel>
+                            </IonListHeader>
+                            <IonItem onClick={openFileDialog} lines="none">
+                                <IonIcon id="documentSelector" slot="start" size="large" color="primary" icon={documentAttachOutline}></IonIcon>
+                                <IonLabel className="ion-padding">
+                                    <h2><b>Select Pdf to attach QR code</b></h2>
+                                    {file ? <p className="ion-text-center"><b>{JSON.stringify(file.name)}</b></p> : ""}
+                                </IonLabel>
+                            </IonItem>
+                        </IonCol>
+
+                        <IonCol size="7" className="ion-text-center">
+                            <IonListHeader>
                                 <IonLabel color="primary"><b>Provide the following details</b></IonLabel>
+                            </IonListHeader>
+                            <IonGrid>
+                                <IonRow>
+                                    <IonCol size="6">
+                                        <IonItem>
+                                            <IonLabel position="floating">Company Name</IonLabel>
+                                            <IonInput
+                                                type="text"
+                                                value={companyName}
+                                                onIonChange={(e) => setCompantName(e.detail.value!)}
+                                            ></IonInput>
+                                        </IonItem>
+                                    </IonCol>
+                                    <IonCol size="6">
+                                        <IonItem>
+                                            <IonLabel position="floating">Officer In Charge</IonLabel>
+                                            <IonInput
+                                                type="text"
+                                                value={officerInCharge}
+                                                onIonChange={(e) => setOfficerinCharge(e.detail.value!)}
+                                            ></IonInput>
+                                        </IonItem>
+                                    </IonCol>
+                                </IonRow>
+                            </IonGrid>
+
+
+                            <IonGrid>
+                                <IonRow>
+                                    <IonCol size="6">
+                                        <IonItem>
+                                            <IonLabel position="floating">Date of Issue</IonLabel>
+                                            <IonInput id="date-input" value={dateOfIssue}></IonInput>
+
+                                            <IonDatetime
+                                                showClearButton={true}
+                                                presentation="date"
+                                                locale="KE"
+                                                onIonChange={(e: any) =>
+                                                    setDateOfIssue(formatdate(e.detail.value!))
+                                                }
+                                            ></IonDatetime>
+
+                                        </IonItem>
+                                    </IonCol>
+                                    <IonCol size="6">
+                                        <IonItem>
+                                            <IonLabel position="floating">Expiry Date</IonLabel>
+                                            <IonInput id="date-input" value={expiryDate}></IonInput>
+
+                                            <IonDatetime
+                                                showClearButton={true}
+                                                presentation="date"
+                                                locale="KE"
+                                                max={maxDate}
+                                                onIonChange={(e: any) =>
+                                                    setExpiryDate(formatdate(e.detail.value!))
+                                                }
+                                            ></IonDatetime>
+
+                                        </IonItem>
+                                    </IonCol>
+                                </IonRow>
+                            </IonGrid>
+
+                            <div style={{ display: "none" }}>
+                                <input id="pdfToUpload" type="file" accept="application/pdf" onChange={handleFileChange} />
+                            </div>
+                            <br />
+                            <IonButton fill="outline" shape="round" expand="block" onClick={processingPDF}>Generate PDF</IonButton>
+                        </IonCol>
+
+                        <IonCol size="2" className="ion-text-center">
+                            <IonListHeader>
+                                <IonLabel color="primary"><b>QR code</b></IonLabel>
                             </IonListHeader>
                             <div ref={qrRef} style={{ display: 'inline-block' }}>
                                 <QRCode value={JSON.stringify(data)} size={100} />
                             </div>
                             <br />
-                            <IonButton onClick={generatePDF}>Generate PDF</IonButton>
+                            {progress ? <p><b>Working on it ... </b> <ButtonProgress /></p> : ""}
                         </IonCol>
-                        <IonCol size="2"></IonCol>
                     </IonRow>
                 </IonGrid>
+                <IonToast
+                    color="primary"
+                    isOpen={iserror}
+                    onDidDismiss={() => setIserror(false)}
+                    message={message}
+                    duration={3000}
+                />
             </IonContent>
         </IonPage>
     );
