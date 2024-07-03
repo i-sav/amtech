@@ -1,1 +1,0 @@
-(self.webpackChunkAmtech=self.webpackChunkAmtech||[]).push([[786],{7786:()=>{}}]);
