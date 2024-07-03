@@ -21,7 +21,6 @@ import {
 } from "@ionic/react";
 import QRCode from 'react-qr-code';
 import { parseISO, format } from "date-fns";
-import { ObjectId } from 'bson';
 import html2canvas from 'html2canvas';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
@@ -65,9 +64,6 @@ const GenerateQr: React.FC = () => {
     const nextYear = new Date(currentDate.getFullYear() + 2, currentDate.getMonth(), currentDate.getDate());
     const maxDate = nextYear.toISOString();
     //
-    //qr Id
-    const qr_id = new ObjectId();
-    console.log(qr_id.toString());
 
     useEffect(() => {
         setShowTabs(false);
