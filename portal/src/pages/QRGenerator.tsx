@@ -72,7 +72,21 @@ const GenerateQr: React.FC = () => {
             setShowTabs(true);
         };
     }, []);
+    //prettify the data on QR code
+    function prettifyJSON(jsonString: any) {
+        try {
+            // Parse the JSON string
+            const jsonObject = JSON.parse(jsonString);
 
+            // Prettify with 2 spaces indentation
+            const prettyJSON = JSON.stringify(jsonObject, null, 2);
+
+            return prettyJSON;
+        } catch (error) {
+            // Handle parsing errors
+            return "Invalid JSON string!";
+        }
+    }
 
     //data to be attached at the QR
     const data = {
@@ -287,7 +301,7 @@ const GenerateQr: React.FC = () => {
                                 <IonLabel color="primary"><b>QR code</b></IonLabel>
                             </IonListHeader>
                             <div ref={qrRef} style={{ display: 'inline-block' }}>
-                                <QRCode value={JSON.stringify(data)} size={100} />
+                                <QRCode value={prettifyJSON(JSON.stringify(data))} size={100} />
                             </div>
                             <br />
                             {progress ? <p><b>Working on it ... </b> <ButtonProgress /></p> : ""}
