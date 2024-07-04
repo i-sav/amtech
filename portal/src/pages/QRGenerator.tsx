@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
     IonContent,
     IonPage,
@@ -23,6 +23,7 @@ import QRCode from 'react-qr-code';
 import { parseISO, format } from "date-fns";
 import html2canvas from 'html2canvas';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { Accept, useDropzone } from 'react-dropzone';
 
 import "@ionic/react/css/ionic-swiper.css";
 import TabsContext from "../components/TabsContext";
@@ -77,22 +78,21 @@ const GenerateQr: React.FC = () => {
     const data = {
         CompanyName: companyName,
         OfficerInCharge: officerInCharge,
-        DateOfIssue: dateOfIssue,
+        CalibrationDate: dateOfIssue,
         ExpiryDate: expiryDate,
     };
     // Replace with your data
 
-    //
-    //const open dialog
-    const openFileDialog = () => {
-        (document as any).getElementById("pdfToUpload").click();
-    }
+    //drag n drop ====
+    const onDrop = useCallback(acceptedFiles => {
+        setFile(acceptedFiles[0]);
+    }, []);
 
-    //const open dialog
-    const handleFileChange = (event: any) => {
-        (document as any).getElementById("pdfToUpload").click();
-        setFile(event.target.files[0]);
-    }
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        // accept: 'application/pdf',
+    });
+    //end of drag and drop ====
 
     //
     const generatePDF = async () => {
@@ -202,13 +202,14 @@ const GenerateQr: React.FC = () => {
                             <IonListHeader>
                                 <IonLabel color="primary"><b>Select PDF</b></IonLabel>
                             </IonListHeader>
-                            <IonItem onClick={openFileDialog} lines="none">
-                                <IonIcon id="documentSelector" slot="start" size="large" color="primary" icon={documentAttachOutline}></IonIcon>
-                                <IonLabel className="ion-padding">
-                                    <h2><b>Select Pdf to attach QR code</b></h2>
-                                    {file ? <p className="ion-text-center"><b>{JSON.stringify(file.name)}</b></p> : ""}
-                                </IonLabel>
-                            </IonItem>
+                            <div {...getRootProps({ className: 'dropzone' })} style={{ border: '2px dashed #ccc', padding: '20px', textAlign: 'center', margin: '20px 0' }}>
+                                <input {...getInputProps()} />
+                                {file ? (
+                                    <p>{file.name}</p>
+                                ) : (
+                                    <p>Drag 'n' drop a PDF file here, or click to select one</p>
+                                )}
+                            </div>
                         </IonCol>
 
                         <IonCol size="7" className="ion-text-center">
@@ -245,7 +246,7 @@ const GenerateQr: React.FC = () => {
                                 <IonRow>
                                     <IonCol size="6">
                                         <IonItem>
-                                            <IonLabel position="floating">Date of Issue</IonLabel>
+                                            <IonLabel position="floating">Calibration Date</IonLabel>
                                             <IonInput id="date-input" value={dateOfIssue}></IonInput>
 
                                             <IonDatetime
@@ -278,12 +279,7 @@ const GenerateQr: React.FC = () => {
                                     </IonCol>
                                 </IonRow>
                             </IonGrid>
-
-                            <div style={{ display: "none" }}>
-                                <input id="pdfToUpload" type="file" accept="application/pdf" onChange={handleFileChange} />
-                            </div>
-                            <br />
-                            <IonButton fill="outline" shape="round" expand="block" onClick={processingPDF}>Generate PDF</IonButton>
+                            <IonButton fill="outline" shape="round" expand="block" onClick={processingPDF}>Generate PDF with QR Code</IonButton>
                         </IonCol>
 
                         <IonCol size="2" className="ion-text-center">

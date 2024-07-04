@@ -45,6 +45,7 @@
     "pullstate": "^1.25.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-dropzone": "^14.2.3",
     "react-qr-code": "^2.0.15",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
