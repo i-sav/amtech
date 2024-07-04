@@ -46,18 +46,20 @@ const Header: React.FC = () => {
   };
 
   return (
-    <>
-      <IonHeader>
-        <IonToolbar>
-          <IonImg style={{ "margin-left": "-40%", width: "100%", height: "90px" }} src="assets/images/Logo.png"></IonImg>
+    <IonHeader>
+      <IonToolbar>
+        <IonImg style={{ "margin-left": "-40%", width: "100%", height: "90px" }} src="assets/images/Logo.png"></IonImg>
+
+        {currentUserDetails.role === "admin" ?
           <IonIcon className="ion-padding" slot="end" size="large" color="primary" icon={qrCodeOutline} onClick={(e) => {
             e.preventDefault();
             history.push("/qr-pdf");
           }}></IonIcon>
-          <IonIcon className="ion-padding" slot="end" size="large" color="primary" icon={logOutOutline} onClick={() => LogOut()}></IonIcon>
-        </IonToolbar>
-      </IonHeader>
-    </>
+          : ""
+        }
+        <IonIcon className="ion-padding" slot="end" size="large" color="primary" icon={logOutOutline} onClick={() => LogOut()}></IonIcon>
+      </IonToolbar>
+    </IonHeader>
   );
 };
 
