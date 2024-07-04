@@ -55,7 +55,8 @@ const Header: React.FC = () => {
             e.preventDefault();
             history.push("/qr-pdf");
           }}></IonIcon>
-          : ""
+          :
+          ""
         }
         <IonIcon className="ion-padding" slot="end" size="large" color="primary" icon={logOutOutline} onClick={() => LogOut()}></IonIcon>
       </IonToolbar>
